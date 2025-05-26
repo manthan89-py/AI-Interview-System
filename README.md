@@ -73,7 +73,7 @@ Final results include:
 1.  Clone the repository
 2. Create a virtual environment
 3. Install dependencies inside the virtual environment.
-4. Add environment variables like API keys
+4. Add environment variables (.env.example) like API keys
 5. Run the application.
 
 
