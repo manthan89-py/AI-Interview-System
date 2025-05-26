@@ -1,0 +1,20 @@
+[project]
+name = "ai-interview"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "black>=25.1.0",
+    "edge-tts>=7.0.2",
+    "litellm>=1.70.4",
+    "noisereduce>=3.0.3",
+    "pygame>=2.6.1",
+    "pypdf>=5.5.0",
+    "pypdf2>=3.0.1",
+    "python-dotenv>=1.1.0",
+    "scipy>=1.15.3",
+    "sounddevice>=0.5.2",
+    "speechmatics-python>=4.0.0",
+    "streamlit>=1.45.1",
+]

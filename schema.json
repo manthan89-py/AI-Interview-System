@@ -1,0 +1,18 @@
+{
+    "name": "Manthan",
+    "createdAt": "2023-05-22T11:00:00.000Z",
+    "updatedAt": "2023-05-22T11:00:00.000Z",
+    "id": 1,
+    "job_description": "Job Description",
+    "resume_highlights": "Resume Highlights",
+    "conversations": [
+        {
+            "Question": "Question",
+            "Candidate Answer": "Answer",
+            "Evaluation": 10,
+            "Feedback": "Feedback"
+        }
+    ],
+    "overall_score": 10,
+    "next_hash": "hash"
+}
