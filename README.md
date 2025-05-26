@@ -16,6 +16,8 @@ An intelligent interview platform that conducts automated job interviews using A
 ### 1. Setup
 - Upload your resume (PDF format)
 - Paste the job description you're applying for
+- Select Maximum number of Questions (Optional)
+- Select AI Interviewer Voice (Optional)
 - Click "Submit" to process your information
 
 ### 2. Interview Process
