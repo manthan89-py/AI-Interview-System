@@ -50,6 +50,7 @@ An intelligent interview platform that conducts automated job interviews using A
 - LLM API key for AI processing
     - Supported Models (LiteLLM): https://docs.litellm.ai/docs/providers (Change LLM_MODEL in .env)
     - Free Experimental Model from MistralAI: https://mistral.ai/
+    - Note: If you're using a different model provider such as OpenAI, be sure to update the environment variable from MISTRAL_API_KEY to OPENAI_API_KEY as per the LiteLLM guidelines.
 - Speechmatics API key for speech-to-text
     - Speechmatics Platform: https://www.speechmatics.com/
 
