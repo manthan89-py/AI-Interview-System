@@ -24,7 +24,7 @@ An intelligent interview platform that conducts automated job interviews using A
 - Click "Start Interview" to begin
 - The AI will greet you and ask the first question
 - Listen to each question (text-to-speech enabled)
-- Record your answer using the audio recorder
+- Record your answer using the audio recorder **(Make sure to use Chrome Browser Only)**
 - The system transcribes and analyzes your response
 - Receive the next question based on your previous answers
 
@@ -48,7 +48,10 @@ An intelligent interview platform that conducts automated job interviews using A
 - PDF resume file
 - Job description text
 - LLM API key for AI processing
+    - Supported Models (LiteLLM): https://docs.litellm.ai/docs/providers (Change LLM_MODEL in .env)
+    - Free Experimental Model from MistralAI: https://mistral.ai/
 - Speechmatics API key for speech-to-text
+    - Speechmatics Platform: https://www.speechmatics.com/
 
 ## 🎨 Interface
 
