@@ -1,4 +1,5 @@
 import streamlit as st
+import asyncio
 import os
 import time
 from datetime import datetime
@@ -83,6 +84,23 @@ def get_ai_voice_details():
         "Sonia (Female)": {"name": "Sonia", "code": "en-GB-SoniaNeural"},
     }
 
+def get_instructions():
+    """Get instructions for the user"""
+    content = """
+    #### Please follow these steps to use the AI Interview App:
+    1. **Upload Resume**: Upload your resume in PDF format.
+    2. **Job Description**: Paste the job description.
+    3. **Start Interview**: Click the "Start Interview" button to begin the AI-driven interview.
+    4. **Maximum Questions**: You can set the maximum number of questions for the interview. (default: 5)
+    5. **Voice Selection**: Choose the AI voice for the interview.(default: Alex (Male))
+    6. **Answer Questions**: Answer the questions posed by the AI interviewer.
+    7. **Review Results**: After the interview, review your performance and feedback.
+
+    **Note**: The AI interviewer will ask you questions based on your resume and the job description.
+
+    I hope you find the experience helpful!
+    """
+    return st.markdown(content)
 
 def render_sidebar():
     """Render sidebar with candidate information and settings"""
@@ -205,12 +223,12 @@ def generate_next_question():
     """Generate and prepare the next question"""
     if st.session_state["conversations"]:
         last_conv = st.session_state["conversations"][-1]
-        next_question, _ = analyze_candidate_response_and_generate_new_question(
+        next_question, _ = asyncio.run(analyze_candidate_response_and_generate_new_question(
             last_conv["Question"],
             last_conv["Candidate Answer"],
             st.session_state["job_description"],
             st.session_state["resume_highlights"],
-        )
+        ))
     else:
         next_question = "Tell me about yourself and your experience."
 
@@ -228,20 +246,20 @@ def process_candidate_response(transcript):
     # Generate feedback for this response
     if st.session_state["qa_index"] < st.session_state["max_questions"] - 1:
         # Not the last question - generate next question and feedback
-        next_question, feedback = analyze_candidate_response_and_generate_new_question(
+        next_question, feedback = asyncio.run(analyze_candidate_response_and_generate_new_question(
             st.session_state["current_question"],
             transcript,
             st.session_state["job_description"],
             st.session_state["resume_highlights"],
-        )
+        ))
     else:
         # Last question - only generate feedback
-        feedback = get_feedback_of_candidate_response(
+        feedback = asyncio.run(get_feedback_of_candidate_response(
             st.session_state["current_question"],
             transcript,
             st.session_state["job_description"],
             st.session_state["resume_highlights"],
-        )
+        ))
 
     # Store conversation
     st.session_state["conversations"].append(
@@ -258,7 +276,7 @@ def process_candidate_response(transcript):
     st.session_state["processing_audio"] = False
     st.session_state["awaiting_response"] = False
 
-    if st.session_state["qa_index"] < st.session_state["max_questions"]:
+    if st.session_state["qa_index"] <= st.session_state["max_questions"]:
         # Prepare next question
         generate_next_question()
         st.success("✅ Answer recorded! Preparing next question...")
@@ -276,6 +294,7 @@ def prepare_thanks_message():
             {"role": "assistant", "content": final_note}
         )
         st.session_state["thanks_message_prepared"] = True
+        st.session_state["qa_index"] -= 1
         st.rerun()
 
 
@@ -403,13 +422,18 @@ def main():
 
     # Header
     st.title("🤖 AI Interview System")
+    insturctions = st.empty()
+    if not  st.session_state["interview_started"]:
+        insturctions = get_instructions()
 
     # Sidebar
     uploaded_resume, job_description, submit = render_sidebar()
 
     # Process submission
     if submit and uploaded_resume and job_description:
+        insturctions.empty()
         process_resume_submission(uploaded_resume, job_description)
+        
 
     # Start interview button
     if st.session_state["name"] and not st.session_state["interview_started"]:

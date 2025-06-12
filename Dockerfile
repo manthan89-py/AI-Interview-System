@@ -10,6 +10,9 @@ WORKDIR /app
 # Copy application files
 COPY . /app
 
+# Copy the .env file
+COPY .env .env
+
 # Install pip and uv
 RUN pip install --no-cache-dir uv
 
